@@ -8,9 +8,9 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS to allow frontend to connect
 
 # Load trained model
-model = load_model('disease_classification_model.h5')
+model = load_model('disease_classification_model.h5')  # Make sure the model is in the correct directory
 
-# Make sure this exactly matches your model's class order
+# Categories for classification (match this to your model's output)
 CATEGORIES = ['Acne', 'Eczema', 'Psoriasis', 'Melanoma', 'BCC', 'Rosacea', 'Warts']
 
 @app.route('/')
@@ -21,7 +21,7 @@ def home():
 def predict():
     try:
         file = request.files['image']
-
+        
         # Read image and decode it to OpenCV format
         img = cv2.imdecode(np.frombuffer(file.read(), np.uint8), cv2.IMREAD_COLOR)
 
